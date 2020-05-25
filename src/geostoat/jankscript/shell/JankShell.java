@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geostoat.jankscript.shell.Token.TokenType;
+import geostoat.jankscript.shell.util.Anonymous;
+import geostoat.jankscript.shell.util.IllegalTokenException;
+import geostoat.jankscript.shell.util.Operator;
 
 public class JankShell {
 	private List<Token> tokenize(String string) {
@@ -76,6 +79,25 @@ public class JankShell {
 		return tokens;
 	}
 	
+	private static List<Token> parseOperator(Operator operator, List<Token> tokens, int i) {
+		try {
+			boolean isFloatOperation = false;
+			if (tokens.get(i-1).getTokenType() == TokenType.FLOAT || tokens.get(i+1).getTokenType() == TokenType.FLOAT) isFloatOperation = true;
+			if (isFloatOperation)
+				tokens.set(i-1, Token.generateToken(String.valueOf(operator.apply(Float.valueOf(tokens.get(i-1).getTokenValue()), Float.valueOf(tokens.get(i+1).getTokenValue())))));
+			else
+				tokens.set(i-1, Token.generateToken(String.valueOf(operator.apply(Integer.valueOf(tokens.get(i-1).getTokenValue()), Integer.valueOf(tokens.get(i+1).getTokenValue())))));
+		} catch (NumberFormatException e) {
+			System.err.println("The values provided for the operation were invalid.");
+			e.printStackTrace();
+		} catch (IllegalTokenException e) {
+			System.err.println("There was an error while parsing an operation.");
+			e.printStackTrace();
+		}
+		
+		return tokens;
+	}
+	
 	private void parse(List<Token> tokens) {		
 		for (int i = 0; i < tokens.size(); i++) {
 			if (tokens.get(i).getTokenValue().equals("sol")) {
@@ -83,22 +105,14 @@ public class JankShell {
 				
 				for (int j = 0; j < segment.size() - 1; j++) {
 					if (segment.get(j).getTokenValue().equals("sol")) break;
-					if (segment.get(j).getTokenValue().equals("+")) {
-						try {
-							boolean isFloatOperation = false;
-							if (segment.get(j-1).getTokenType() == TokenType.FLOAT || segment.get(j+1).getTokenType() == TokenType.FLOAT) isFloatOperation = true;
-							if (isFloatOperation)
-								segment.set(j-1, Token.generateToken(String.valueOf(Float.valueOf(segment.get(j-1).getTokenValue()) + Float.valueOf(segment.get(j+1).getTokenValue()))));
-							else
-								segment.set(j-1, Token.generateToken(String.valueOf(Integer.valueOf(segment.get(j-1).getTokenValue()) + Integer.valueOf(segment.get(j+1).getTokenValue()))));
-						} catch (NumberFormatException e) {
-							System.err.println("The values provided for the operation were invalid.");
-							e.printStackTrace();
-						} catch (IllegalTokenException e) {
-							System.err.println("There was an error while parsing an operation.");
-							e.printStackTrace();
-						}
-					}
+					else if (segment.get(j).getTokenValue().equals("+"))
+						segment = parseOperator(Operator.ADDITION, segment, j);
+					else if (segment.get(j).getTokenValue().equals("-"))
+						segment = parseOperator(Operator.SUBTRACTION, segment, j);
+					else if (segment.get(j).getTokenValue().equals("*"))
+						segment = parseOperator(Operator.MULTIPLICATION, segment, j);
+					else if (segment.get(j).getTokenValue().equals("/"))
+						segment = parseOperator(Operator.DIVISION, segment, j);
 				}
 			}
 			if (tokens.get(i).getTokenValue().equals("print")) {

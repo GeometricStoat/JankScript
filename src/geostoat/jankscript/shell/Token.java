@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import geostoat.jankscript.shell.util.IllegalTokenException;
+
 class Token {
 	public static enum TokenType {
 		KEYWORD,
@@ -35,6 +37,7 @@ class Token {
 		return token;
 	}
 	
+	@Override
 	public String toString() {
 		return "Token(" + token + ", " + type.toString() + ")";
 	}

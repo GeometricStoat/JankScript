@@ -1,4 +1,4 @@
-package geostoat.jankscript.shell;
+package geostoat.jankscript.shell.util;
 
 public class IllegalTokenException extends Exception {
 	private static final long serialVersionUID = 8170302573646963780L;
