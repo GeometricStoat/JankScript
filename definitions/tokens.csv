@@ -1,0 +1,7 @@
+sol,SPECIAL
+print,KEYWORD
+;,SEPARATOR
+\+,OPERATOR
+\d+,INTEGER
+\d+\.\d+,FLOAT
+".*",STRING
