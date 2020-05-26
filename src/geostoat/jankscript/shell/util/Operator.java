@@ -11,6 +11,11 @@ public enum Operator {
 		public int apply(int x, int y) {
 			return x + y;
 		}
+		
+		@Override
+		public String apply(String x, String y) {
+			return x + y;
+		}
 	},
 	SUBTRACTION {
 		@Override
@@ -33,6 +38,16 @@ public enum Operator {
 		public int apply(int x, int y) {
 			return x * y;
 		}
+		
+		@Override
+		public String apply(String x, int y) {
+			String r = "";
+			
+			for (int i = 0; i < y; i++)
+				r += x;
+			
+			return r;
+		}
 	},
 	DIVISION {
 		@Override
@@ -48,4 +63,6 @@ public enum Operator {
 	
 	public abstract float apply(float x, float y);
 	public abstract int apply(int x, int y);
+	public String apply(String x, String y) { return null; }
+	public String apply(String x, int y) { return null; }
 }

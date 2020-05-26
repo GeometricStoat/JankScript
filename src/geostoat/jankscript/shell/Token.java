@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import geostoat.jankscript.shell.util.IllegalTokenException;
 
-class Token {
+public class Token {
 	public static enum TokenType {
 		KEYWORD,
 		SEPARATOR,
@@ -24,16 +24,16 @@ class Token {
 	private TokenType type;
 	private String token;
 	
-	Token(String token, TokenType type) {
+	public Token(String token, TokenType type) {
 		this.token = token;
 		this.type = type;
 	}
 	
-	TokenType getTokenType() {
+	public TokenType getTokenType() {
 		return type;
 	}
 	
-	String getTokenValue() {
+	public String getTokenValue() {
 		return token;
 	}
 	
@@ -42,7 +42,7 @@ class Token {
 		return "Token(" + token + ", " + type.toString() + ")";
 	}
 	
-	static void initTokens() {
+	public static void initTokens() {
 		try {
 			String[] lines = Files.readString(Path.of("definitions/tokens.csv"), StandardCharsets.US_ASCII).split("\n");
 			for (String line : lines) {
@@ -55,7 +55,7 @@ class Token {
 		}
 	}
 	
-	static Token generateToken(String token) throws IllegalTokenException {
+	public static Token generateToken(String token) throws IllegalTokenException {
 		if (isValidToken(token)) {
 			return new Token(token, getTokenType(token));
 		} else {
@@ -63,7 +63,7 @@ class Token {
 		}
 	}
 	
-	static boolean isValidToken(String token) {
+	public static boolean isValidToken(String token) {
 		for (Map.Entry<String, TokenType> entry : TOKENS.entrySet()) {
 			if (Pattern.matches(entry.getKey(), token)) {
 				return true;
@@ -73,7 +73,7 @@ class Token {
 		return false;
 	}
 	
-	static TokenType getTokenType(String token) {
+	public static TokenType getTokenType(String token) {
 		if (isValidToken(token)) {
 			for (Map.Entry<String, TokenType> entry : TOKENS.entrySet()) {
 				if (Pattern.matches(entry.getKey(), token)) {
@@ -85,7 +85,7 @@ class Token {
 		return null;
 	}
 	
-	static TokenType getTokenType(String token, int index) {
+	public static TokenType getTokenType(String token, int index) {
 		token = String.valueOf(token.charAt(index));
 		if (isValidToken(token)) {
 			for (Map.Entry<String, TokenType> entry : TOKENS.entrySet()) {
