@@ -4,8 +4,15 @@ import java.util.List;
 
 import geostoat.jankscript.shell.Token;
 
-public class AST {
-	public static AST assemble(List<Token> tokens) {
-		return null;
+public class AST extends ASTNode {
+	private ASTNode child;
+	
+	public AST(List<Token> tokens) {
+		
+	}
+
+	@Override
+	public ASTNode traverse() {
+		return child.traverse();
 	}
 }
