@@ -1,10 +1,15 @@
-sol,SPECIAL
-print,KEYWORD
-;,SEPARATOR
-\+,OPERATOR
--,OPERATOR
-\*,OPERATOR
-/,OPERATOR
-\d+,INTEGER
-\d+\.\d+,FLOAT
-".*",STRING
+ ,space
+\n,endline
+\+,operator
+-,operator
+\*,operator
+/,operator
+==,equals
+=,assign
+print,print
+\d+,integer
+while,while
+if,if
+then,then
+end,end
+[_a-zA-Z][_a-zA-Z0-9]*,variable

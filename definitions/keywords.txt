@@ -1,0 +1,5 @@
+print,print
+while,while
+if,if
+then,then
+end,end
