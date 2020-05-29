@@ -2,35 +2,11 @@ package geostoat.jankscript.shell;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.*;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Token {
-	/*public static enum TokenType {
-		//KEYWORD,
-		//SEPARATOR,
-		//OPERATOR,
-		//STRING,
-		//INTEGER,
-		//FLOAT,
-		//SPECIAL
-		SPACE,
-		ENDLINE,
-		OPERATOR,
-		ASSIGN,
-		EQUALS,
-		PRINT,
-		INTEGER,
-		WHILE,
-		IF,
-		THEN,
-		END,
-		VARIABLE
-	}*/
-	//public static Map<String, String> TOKENS = new HashMap<String, String>();
 	public static Map<String, String> SYMBOLS = new HashMap<String, String>();
 	public static Map<String, String> KEYWORDS = new HashMap<String, String>();
 	public static Map<String, String> VARIABLE = Map.of("[_a-zA-Z][_a-zA-Z0-9]*", "variable");
@@ -51,11 +27,11 @@ public class Token {
 		this.type = type;
 	}
 	
-	public String getTokenType() {
+	public String getType() {
 		return type;
 	}
 	
-	public String getTokenValue() {
+	public String getValue() {
 		return token;
 	}
 	
@@ -87,39 +63,7 @@ public class Token {
 	public static void initTokens() {
 		SYMBOLS = readFileToMap("definitions/symbols.txt");
 		KEYWORDS = readFileToMap("definitions/keywords.txt");
-		//TOKENS.putAll(SYMBOLS);
-		//TOKENS.putAll(KEYWORDS);
 	}
-	
-	/*public static Token generateToken(String token) throws IllegalTokenException {
-		if (isValidToken(token)) {
-			return new Token(token, getTokenType(token));
-		} else {
-			throw new IllegalTokenException();
-		}
-	}*/
-	
-	/*public static boolean isValidToken(String token) {
-		for (Map.Entry<String, String> entry : TOKENS.entrySet()) {
-			if (Pattern.matches(entry.getKey(), token)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public static String getTokenType(String token) {
-		if (isValidToken(token)) {
-			for (Map.Entry<String, String> entry : TOKENS.entrySet()) {
-				if (Pattern.matches(entry.getKey(), token)) {
-					return entry.getValue();
-				}
-			}
-		}
-		
-		return null;
-	}*/
 	
 	public static boolean isValidToken(String token, Map<String, String> tokens) {
 		for (Map.Entry<String, String> entry : tokens.entrySet()) {
@@ -142,17 +86,4 @@ public class Token {
 		
 		return null;
 	}
-	
-	/*public static TokenType getTokenType(String token, int index) {
-		token = String.valueOf(token.charAt(index));
-		if (isValidToken(token)) {
-			for (Map.Entry<String, TokenType> entry : TOKENS.entrySet()) {
-				if (Pattern.matches(entry.getKey(), token)) {
-					return entry.getValue();
-				}
-			}
-		}
-		
-		return null;
-	}*/
 }

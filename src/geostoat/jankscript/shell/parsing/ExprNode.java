@@ -1,19 +1,29 @@
 package geostoat.jankscript.shell.parsing;
 
+import java.util.*;
+
 class ExprNode extends ASTNode {
-	ASTNode[] children;
+	List<BinOpNode<?>> children;
 	
-	ExprNode(ASTNode... nodes) {
-		children = nodes;
+	ExprNode(List<BinOpNode<?>> nodes) {
+		children = new ArrayList<BinOpNode<?>>();
+		children.addAll(nodes);
 	}
 	
+	/*ContainerNode<?> child;
+	
+	ExprNode(ContainerNode<?> child) {
+		this.child = child;
+	}*/
+	
 	@Override
-	ASTNode traverse() {
-		for (int i = 0; i < children.length; i++) {
-			if (children[i] instanceof LiteralNode<?>)
-				System.out.println("Hey");
+	ASTNode traverse() {		
+		for (int i = 0; i < children.size(); i++) {
+			//LiteralNode<?> x = (LiteralNode<?>) children.get(i).traverse();
+			//System.out.println(x);
+			System.out.println("Expression: " + children.get(i).traverse());
 		}
 		
-		return null;
+		return null;//child.traverse();
 	}
 }

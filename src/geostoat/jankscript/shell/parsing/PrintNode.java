@@ -1,6 +1,6 @@
 package geostoat.jankscript.shell.parsing;
 
-class PrintNode extends ASTNode {
+class PrintNode extends KeywordNode {
 	ExprNode value;
 	
 	PrintNode() {}
@@ -16,7 +16,7 @@ class PrintNode extends ASTNode {
 	@Override
 	ASTNode traverse() {
 		if (value != null)
-			System.out.println(value.traverse());
+			System.out.println("[PRINT] " + value.traverse());
 		return null;
 	}
 }
